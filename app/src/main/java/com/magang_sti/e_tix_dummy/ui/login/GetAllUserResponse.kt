@@ -1,4 +1,4 @@
-package com.magang_sti.e_tix_dummy.login
+package com.magang_sti.e_tix_dummy.ui.login
 
 import com.google.gson.annotations.SerializedName
 

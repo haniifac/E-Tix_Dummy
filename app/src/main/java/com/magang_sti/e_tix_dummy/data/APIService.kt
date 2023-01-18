@@ -1,7 +1,7 @@
 package com.magang_sti.e_tix_dummy.data
 
-import com.magang_sti.e_tix_dummy.login.GetAllUserResponse
-import com.magang_sti.e_tix_dummy.login.UsersItem
+import com.magang_sti.e_tix_dummy.ui.login.GetAllUserResponse
+import com.magang_sti.e_tix_dummy.ui.login.UsersItem
 import retrofit2.Call
 import retrofit2.http.GET
 
