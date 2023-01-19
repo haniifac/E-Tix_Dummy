@@ -10,14 +10,8 @@ class UserViewModel @Inject constructor(private val userRepo : UserRepository) :
     fun getAllUsers() : LiveData<List<UsersItem>?> = userRepo.getAllUsers()
 
     /**
-     * Get user current location
-     * @return Array 0 = Latitude, Array 1 = Longitude
-     **/
-    private fun getCurrentLocation() : Array<Int> = arrayOf(1,5)
-
-    /**
      * Get event location area
-     * @return Array 0 = North-East Bound, Array 1 = South West Bound
+     * @return Array 0 = South-West Bound , Array 1 = North-East Bound
      **/
     private fun getEventLocationBound(): Array<IntArray> {
         val southWest = intArrayOf(0, 0)
@@ -33,7 +27,7 @@ class UserViewModel @Inject constructor(private val userRepo : UserRepository) :
 
         // Bottom Left = 0,0
         // Top Right = 10,10
-        // User Location = 1,5
+        // User Location = vary
         return (userLocation[0] > eventLocation[0][0] && userLocation[0] < eventLocation[1][0]
                 && userLocation[1] > eventLocation[0][1] && userLocation[1] < eventLocation[1][1])
     }
