@@ -40,26 +40,37 @@ class LoginFragment : Fragment() {
 
     private fun handleLogin(){
         var isFound = false
+        var isLocationValid = false
+
         val inpUsername = binding.edtUsername.text.toString()
         val inpPassword = binding.edtPassword.text.toString()
 
         binding.progressLogin.visibility = View.VISIBLE
 
         userVM.getAllUsers().observe(viewLifecycleOwner){
+            var username = "none"
+            val userLocationNotValid = arrayOf(11,50)
+            val userLocationValid = arrayOf(1,5)
+
             if (it != null) {
                 for (i in it) {
                     if (i.username == inpUsername && i.password == inpPassword) {
                         binding.progressLogin.visibility = View.INVISIBLE
                         isFound = true
-                        showDialog("Login Success", "Welcome ${i.username}")
-                        findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                        username = i.username
                     }
                 }
             }
 
+            binding.progressLogin.visibility = View.INVISIBLE
+
             if (!isFound) {
-                binding.progressLogin.visibility = View.INVISIBLE
                 showDialog("Login Failed", "Error Code : -2")
+            }else if(!userVM.isUserInEventLocation(userLocationValid)) {
+                showDialog("Login Failed", "Error Code : -3")
+            }else{
+                showDialog("Login Success", "Welcome $username")
+                findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
             }
         }
     }
