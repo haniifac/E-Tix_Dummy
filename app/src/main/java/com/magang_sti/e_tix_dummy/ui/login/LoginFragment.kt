@@ -12,7 +12,6 @@ import com.magang_sti.e_tix_dummy.R
 import com.magang_sti.e_tix_dummy.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -35,23 +34,32 @@ class LoginFragment : Fragment() {
 
     private fun setListener() {
         binding.btnLogin.setOnClickListener {
-            var isFound = false
-            val inpUsername = binding.edtUsername.text.toString()
-            val inpPassword = binding.edtPassword.text.toString()
-            userVM.getAllUsers().observe(viewLifecycleOwner){
-                if (it != null) {
-                    for (i in it) {
-                        if (i.username == inpUsername && i.password == inpPassword) {
-                            isFound = true
-                            showDialog("Login Success", "Welcome ${i.username}")
-                            findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-                        }
+            handleLogin()
+        }
+    }
+
+    private fun handleLogin(){
+        var isFound = false
+        val inpUsername = binding.edtUsername.text.toString()
+        val inpPassword = binding.edtPassword.text.toString()
+
+        binding.progressLogin.visibility = View.VISIBLE
+
+        userVM.getAllUsers().observe(viewLifecycleOwner){
+            if (it != null) {
+                for (i in it) {
+                    if (i.username == inpUsername && i.password == inpPassword) {
+                        binding.progressLogin.visibility = View.INVISIBLE
+                        isFound = true
+                        showDialog("Login Success", "Welcome ${i.username}")
+                        findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                     }
                 }
+            }
 
-                if (!isFound) {
-                    showDialog("Login Failed", "Error Code : -2")
-                }
+            if (!isFound) {
+                binding.progressLogin.visibility = View.INVISIBLE
+                showDialog("Login Failed", "Error Code : -2")
             }
         }
     }
@@ -72,4 +80,5 @@ class LoginFragment : Fragment() {
             }
         }, 2000)
     }
+
 }
