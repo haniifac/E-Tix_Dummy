@@ -49,8 +49,14 @@ class LoginFragment : Fragment() {
 
         userVM.getAllUsers().observe(viewLifecycleOwner){
             var username = "none"
-            val userLocationNotValid = arrayOf(11,50)
-            val userLocationValid = arrayOf(1,5)
+
+            // valid user location
+            var userLocation = arrayOf(1,5)
+
+            //if checked, change to invalid location
+            if(binding.cbChangeLocation.isChecked){
+                userLocation = arrayOf(11,50)
+            }
 
             if (it != null) {
                 for (i in it) {
@@ -66,7 +72,7 @@ class LoginFragment : Fragment() {
 
             if (!isFound) {
                 showDialog("Login Failed", "Error Code : -2")
-            }else if(!userVM.isUserInEventLocation(userLocationValid)) {
+            }else if(!userVM.isUserInEventLocation(userLocation)) {
                 showDialog("Login Failed", "Error Code : -3")
             }else{
                 showDialog("Login Success", "Welcome $username")
