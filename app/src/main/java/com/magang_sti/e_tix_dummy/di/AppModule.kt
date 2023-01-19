@@ -1,7 +1,7 @@
 package com.magang_sti.e_tix_dummy.di
 
 import com.magang_sti.e_tix_dummy.data.APIService
-import com.magang_sti.e_tix_dummy.login.UserRepository
+import com.magang_sti.e_tix_dummy.ui.login.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
